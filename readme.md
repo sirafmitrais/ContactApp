@@ -1,8 +1,10 @@
 <!-- PROJECT LOGO -->
+    
+![btpn-logo]
+
 <br />
 <p align="center">
   <a href="https://github.com/sirafmitrais/rizky-muhammad-faris-betest">
-    <img src="[images/logo.png](https://upload.wikimedia.org/wikipedia/id/8/8d/Logo_BTPN.svg)" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">
@@ -144,4 +146,6 @@ Project Link: [https://github.com/sirafmitrais/rizky-muhammad-faris-betest](http
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [mitrais-logo]: https://media.jobthai.com/v1/images/logo-pic-map/280252_logo_20210223113430.jpeg
+[btpn-logo]: https://upload.wikimedia.org/wikipedia/id/8/8d/Logo_BTPN.svg
+
 
