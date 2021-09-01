@@ -1,8 +1,16 @@
-import { createClient } from "redis";
+import { createClient, RedisClient } from "redis";
 import { Request, Response, NextFunction, Router } from 'express';
 
-const clientLocal = createClient(6379, "localhost")
+import { configApp } from "../../config/env.config";
 
+const clientLocal = createClient(6379, "localhost")
+const clientRedisLab = createClient({
+    port:13686,
+    host:"redis-13686.c252.ap-southeast-1-1.ec2.cloud.redislabs.com",
+    password:"mt87TL90LdBzdR20LFDLHjGdq9yLSyCS"
+})
+
+const redisClient: RedisClient = clientRedisLab;
 
 /**
  * get redis cache
@@ -10,7 +18,7 @@ const clientLocal = createClient(6379, "localhost")
  */
 function get(redis_key:string){
     return new Promise((resolve) => {
-        clientLocal.get(redis_key, (err, reply) => {
+        redisClient.get(redis_key, (err, reply) => {
             if(err){
                 console.error("Redis GET Connection Err: ", err)
             }
@@ -32,7 +40,7 @@ function get(redis_key:string){
 function set(redis_key:string, redis_value:string){
     console.log("Success Redis SET: ", redis_key)
     
-    let res = clientLocal.setex(redis_key,20,redis_value);
+    let res = redisClient.setex(redis_key,20,redis_value);
     console.log("check set :",res)
 }
 
@@ -40,7 +48,7 @@ function set(redis_key:string, redis_value:string){
 function cache(req: Request, res: Response, next: NextFunction){
     const redis_key = req.path;
     console.log("masuk cache : ", redis_key);
-    clientLocal.get(redis_key, (err, data) => {
+    redisClient.get(redis_key, (err, data) => {
         if(err) throw err;
         if(data !== null) {
             console.log("Success Redis GET: ", redis_key)
