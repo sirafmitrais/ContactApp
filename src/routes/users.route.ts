@@ -10,14 +10,14 @@ import {
     getUserWithIdentity
 } from '../controllers/user.controller';
 
-
+import redisService from '../common/redis';
 
 var router = Router();
 
 router.use(authMiddleware)
 
 router.route('/')
-    .get(index)
+    .get(redisService.cache, index)
     .post(postUser)
 
 router.route('/:id')
@@ -25,9 +25,9 @@ router.route('/:id')
     .delete(delUser)
 
 router.route('/identity/:identity')
-    .get(getUserWithIdentity)
+    .get(redisService.cache, getUserWithIdentity)
 
 router.route('/account/:account')
-    .get(getUserWithAccount)
+    .get(redisService.cache, getUserWithAccount)
 
 export {router};

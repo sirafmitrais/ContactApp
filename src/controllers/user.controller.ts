@@ -13,6 +13,8 @@ import {
     peopleUpdate,
 } from '../contract/user.contract'
 
+import redisService from '../common/redis'
+
 
 const index = async (req: Request, res: Response, next: NextFunction) => {
     let response = await listIndex();
@@ -24,6 +26,8 @@ const index = async (req: Request, res: Response, next: NextFunction) => {
             }
         )
     }
+    const redis_key = req.path;
+    redisService.set(redis_key, JSON.stringify(response))
     res.status(200)
     res.json(response);
 };
@@ -84,6 +88,8 @@ const getUserWithAccount = async (req: Request, res: Response, next: NextFunctio
             error: response.error
         })
     }
+    const redis_key = req.path;
+    redisService.set(redis_key, JSON.stringify(response))
     res.status(200);
     res.json(response)
 }
@@ -96,6 +102,8 @@ const getUserWithIdentity = async (req: Request, res: Response, next: NextFuncti
             error: response.error
         })
     }
+    const redis_key = req.path;
+    redisService.set(redis_key, JSON.stringify(response))
     res.status(200);
     res.json(response)
 }
