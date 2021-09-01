@@ -10,7 +10,7 @@ const options = {
 
 function connectToMongoDb(mongoUser: string | undefined, mongoPassword: string | undefined, mongoHost: string | undefined, mongoDB: string | undefined) {
     if (mongoUser || mongoPassword){
-        var mongoConnection = `mongodb://${mongoUser}:${mongoPassword}@${mongoHost}/${mongoDB}`;
+        var mongoConnection = `mongodb+srv://${mongoUser}:${mongoPassword}@${mongoHost}/${mongoDB}?retryWrites=true&w=majority`;
     }
     else{
         var mongoConnection = `mongodb://${mongoHost}/${mongoDB}`;

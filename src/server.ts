@@ -1,9 +1,8 @@
 import app from "./app";
 
-const config = require("./config/env.config");
-
-const server = app.listen(config.PORT, () => {
-    console.log('The Application is listening on port ', config.PORT)
+import { configApp } from "./config/env.config";
+const server = app.listen(configApp.PORT, () => {
+    console.log('The Application is listening on port ', configApp.PORT)
     console.log("Press CTRL + C to close")
 });
 

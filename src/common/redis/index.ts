@@ -3,7 +3,7 @@ import { Request, Response, NextFunction, Router } from 'express';
 
 import { configApp } from "../../config/env.config";
 
-const clientLocal = createClient(6379, "localhost")
+// const clientLocal = createClient(6379, "localhost")
 const clientRedisLab = createClient({
     port:13686,
     host:"redis-13686.c252.ap-southeast-1-1.ec2.cloud.redislabs.com",
