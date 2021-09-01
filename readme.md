@@ -17,7 +17,7 @@
     <a href="https://github.com/sirafmitrais/rizky-muhammad-faris-betest"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://ms-rizky-muhammad-faris-betest.herokuapp.com">View Demo</a>
     ·
   </p>
 </p>
