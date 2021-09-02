@@ -57,6 +57,8 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
         });
         return;
     }
+    req.headers.user = JSON.stringify(payload)
+    req.headers.token = token
     next();
 }
 

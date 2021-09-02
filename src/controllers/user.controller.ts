@@ -32,7 +32,7 @@ const index = async (req: Request, res: Response, next: NextFunction) => {
     res.json(response);
 };
 
-const postUser = async (req: any, res: any, next: any) => {
+const postUser = async (req: Request, res: Response, next: NextFunction) => {
     let dataCreate: people = {
         user_name: req.body.user_name,
         email_address: req.body.email_address,

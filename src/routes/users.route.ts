@@ -10,6 +10,11 @@ import {
     getUserWithIdentity
 } from '../controllers/user.controller';
 
+import {
+    validateUserAccountIdentity,
+    validateUserbyId
+} from '../controllers/validator/user.validator'
+
 import redisService from '../common/redis';
 
 var router = Router();
@@ -21,13 +26,13 @@ router.route('/')
     .post(postUser)
 
 router.route('/:id')
-    .patch(patchUser)
-    .delete(delUser)
+    .patch([validateUserbyId],patchUser)
+    .delete([validateUserbyId],delUser)
 
 router.route('/identity/:identity')
-    .get(redisService.cache, getUserWithIdentity)
+    .get([validateUserAccountIdentity,redisService.cache], getUserWithIdentity)
 
 router.route('/account/:account')
-    .get(redisService.cache, getUserWithAccount)
+    .get([validateUserAccountIdentity,redisService.cache], getUserWithAccount)
 
 export {router};

@@ -30,7 +30,7 @@ const validateLogin = async (req: Request, res: Response, next: NextFunction) =>
     let err : string[]= [];
     let {username, password} = req.body
     if (!username) {
-        err.push('userame is required');
+        err.push('username is required');
     }
     if(!password){
         err.push('password is required')
