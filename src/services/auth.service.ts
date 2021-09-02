@@ -27,12 +27,13 @@ type error = string[]
 function generateJwt(user: peopleGet | any){
     const secret:string = process.env.SECRET_KEY?.toString() || "secret123";
 
-    let userData: peopleGet = {
+    let userData: userBaseRes = {
         id: user.id,
         user_name: user.user_name,
         email_address: user.email_address,
         account_number: user.account_number,
-        identity_number: user.identity_number
+        identity_number: user.identity_number,
+        level: user.level
     }
 
     return jwt.sign(
@@ -132,7 +133,7 @@ async function loginUser(loginReq: loginReq): Promise<{token?: string|null, erro
         .catch((err: any) => {
             errors.push(err);
         }) 
-
+    
     if(resData != null){
         let compare = await comparePassword(loginReq.password, resData.password);
         if(!compare){

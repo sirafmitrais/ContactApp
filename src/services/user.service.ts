@@ -1,4 +1,4 @@
-import { UserModel } from '../schemas/user.schema'
+import { UserModel } from '../schemas/'
 
 import {
     people,
