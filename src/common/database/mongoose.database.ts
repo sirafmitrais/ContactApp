@@ -12,8 +12,11 @@ function connectToMongoDb(mongoUser: string | undefined, mongoPassword: string |
     if (mongoUser || mongoPassword){
         var mongoConnection = `mongodb+srv://${mongoUser}:${mongoPassword}@${mongoHost}/${mongoDB}?retryWrites=true&w=majority`;
     }
-    else{
+    else if(mongoHost && mongoDB){
         var mongoConnection = `mongodb://${mongoHost}/${mongoDB}`;
+    }
+    else{
+        var mongoConnection = 'mongodb://localhost:27017/test'
     }
     mongoose.connect(mongoConnection,options)
     .catch((err:any) => {

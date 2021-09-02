@@ -17,7 +17,8 @@ const configApp = {
         HOST: process.env.REDIS_HOST_REMOTE || "localhost",
         PORT: process.env.REDIS_PORT_REMOTE || 6379,
         PASSWORD: process.env.REDIS_PASSWORD || ""
-    }
+    },
+    MAGIC_KEYWORD: process.env.MAGIC_KEYWORD
 }
 
 export {
