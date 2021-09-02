@@ -1,6 +1,8 @@
 import { mongoose } from "../common/database/mongoose.database";
-const Schema = mongoose.Schema;
 
+import { educationSchema, companySchema } from ".";
+
+const Schema = mongoose.Schema;
 const contactSchema = new Schema(
     {
         name: {
@@ -11,10 +13,10 @@ const contactSchema = new Schema(
             type: String,
         },
         company: {
-            type: String,
+            type: [companySchema],
         },
-        Education: {
-            type: String,
+        education: {
+            type: [educationSchema],
         }, 
         phone_number: {
             type: String,
@@ -40,5 +42,6 @@ const contactSchema = new Schema(
 const ContactModel = mongoose.model('contact', contactSchema)
 
 export {
-    ContactModel
+    ContactModel,
+    contactSchema
 }

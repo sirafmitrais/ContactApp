@@ -29,5 +29,6 @@ const educationSchema = new Schema(
 const EducationModel = mongoose.model('education', educationSchema)
 
 export {
-    EducationModel
+    EducationModel,
+    educationSchema
 }

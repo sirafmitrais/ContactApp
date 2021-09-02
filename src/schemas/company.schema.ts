@@ -35,5 +35,6 @@ const companySchema = new Schema(
 const CompanyModel = mongoose.model('company', companySchema)
 
 export {
-    CompanyModel
+    CompanyModel,
+    companySchema
 }
