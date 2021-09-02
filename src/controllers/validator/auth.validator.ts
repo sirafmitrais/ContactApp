@@ -32,7 +32,9 @@ const validateLogin = async (req: Request, res: Response, next: NextFunction) =>
     if (!username) {
         err.push('userame is required');
     }
-    else if(!password)
+    if(!password){
+        err.push('password is required')
+    }
     if (err.length > 0){
         res.status(422);
         res.json({
