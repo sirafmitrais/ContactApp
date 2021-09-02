@@ -2,6 +2,14 @@ import { mongoose } from "../common/database/mongoose.database";
 import * as bcrypt from 'bcrypt'
 const Schema = mongoose.Schema;
 
+enum level {
+    Godfather = "Godfather",
+    Veteran = "Veteran",
+    HeadHunter = "HeadHunter",
+    Partisan = "Partisan",
+    Noob = "Noob"
+}
+
 const userSchema = new Schema(
     {
         user_name: {
@@ -27,6 +35,9 @@ const userSchema = new Schema(
         password: {
             type: String,
             required: true,
+        },
+        level: {
+            type: level
         }
     },
     {
@@ -49,5 +60,6 @@ userSchema.methods.encryptPassword = function (password) {
 const UserModel = mongoose.model('user', userSchema)
 
 export {
-    UserModel
+    UserModel,
+    level
 }

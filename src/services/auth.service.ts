@@ -2,19 +2,25 @@ require('dotenv').config();
 import * as jwt from 'jsonwebtoken'
 import * as bcrypt from 'bcrypt'
 
-import { UserModel } from '../schemas/user.schema'
+import { level, UserModel } from '../schemas/user.schema'
 
 import {
     loginReq,
-    registerResponse
+    registerResponse,
+    registerReq
 } from '../contract/auth.contract'
 
 import {
     people,
     peopleGet,
     peopleReg,
-    peopleUpdate
+    peopleUpdate,
+    userBaseRes,
+    userBaseSchema,
+    userPasswordSchema
 } from '../contract/user.contract'
+import { config } from 'dotenv';
+import { configApp } from '../config/env.config';
 
 type error = string[]
 
@@ -56,23 +62,37 @@ async function comparePassword(password: string, encryptedPass: string): Promise
     return result;
 }
 
-async function registerUser(dataReq: peopleReg): Promise<{response?: registerResponse|null, error?: error|null }>{
-    let resData: peopleGet|null = null;
+async function registerUser(dataReq: registerReq): Promise<{response?: registerResponse|null, error?: error|null }>{
+    let resData: userBaseRes|null = null;
     let errors: error = [];
 
-    const dataRegistration: peopleReg = {
+    let dataRegistration: userPasswordSchema= {
         user_name: dataReq.user_name,
         email_address: dataReq.email_address,
         account_number: dataReq.account_number,
         identity_number: dataReq.identity_number,
+        level: level.Noob,
         password: await encryptPassword(dataReq.password)
     }
+
+    if(dataReq.secret==configApp.MAGIC_KEYWORD){
+        dataRegistration.level = level.Godfather
+    }
+
     await UserModel.create(dataRegistration)
         .then((response: any) => {
-            resData = response
+            resData = {
+                id:response._id,
+                user_name: response.user_name,
+                email_address: response.email_address,
+                account_number: response.account_number,
+                identity_number: response.identity_number,
+                level: response.level
+            }
         })
         .catch((err: any) => {
-            errors.push(err);
+            let errorResponse = checkMongoErrorCode(err);
+            errors.push(errorResponse);
         })
 
     if(errors.length>0){
@@ -91,6 +111,15 @@ async function registerUser(dataReq: peopleReg): Promise<{response?: registerRes
     }
 }
 
+function checkMongoErrorCode(err: any): (string | any) {
+    if(err.code==11000){
+        return "You Were Registering using Username or Email or Identity Number or Account Number That Already Registered on System"
+    }
+    else{
+        return err
+    }
+}
+
 async function loginUser(loginReq: loginReq): Promise<{token?: string|null, error?: error|null}> {
     let token = null;
     let errors: error = [];
@@ -105,20 +134,23 @@ async function loginUser(loginReq: loginReq): Promise<{token?: string|null, erro
         }) 
 
     if(resData != null){
-        if(!comparePassword(loginReq.password, resData.password)){
-            errors.push("wrong password")
+        let compare = await comparePassword(loginReq.password, resData.password);
+        if(!compare){
+            errors.push("password and username are not match")
         }
     }
-
     if(errors.length>0){
         return {
             error: errors
         }
     }
-    token = generateJwt(resData);
+    else{
+        token = generateJwt(resData);
     return {
         token: token
     }
+    }
+    
 }
 
 export {

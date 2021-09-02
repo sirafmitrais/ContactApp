@@ -4,6 +4,10 @@ import {
     loginUser
 } from '../services/auth.service'
 
+import {
+    registerReq
+} from '../contract/auth.contract'
+
 interface people {
     user_name: string,
     account_number: string,
@@ -19,12 +23,13 @@ interface loginReq {
 
 const register = async (req: Request, res: Response) => {
 
-    let dataReg: people = {
+    let dataReg: registerReq = {
         user_name: req.body.user_name,
         email_address: req.body.email_address,
         account_number: req.body.account_number,
         identity_number: req.body.identity_number,
-        password: req.body.password
+        password: req.body.password,
+        secret: req.body.secret
     }
 
     let response = await registerUser(dataReg);
