@@ -10,6 +10,9 @@ app.use(express.json())
 app.use(express.urlencoded({
     extended: true
 }))
+
+app.set('view engine', 'pug');
+
 app.use(loggerMiddleware);
 app.use('/', indexRouter);
 app.use('/users', userRouter);

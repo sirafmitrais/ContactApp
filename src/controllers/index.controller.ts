@@ -18,6 +18,11 @@ const index = async (req: Request, res: Response, next: NextFunction) => {
     res.json(response.listHewan);
 };
 
+const viewBigWord = async (req: Request, res: Response, next: NextFunction) => {
+    res.render('index', {text: 'Hey Kamu, Iyaa Kamu'});
+}
+
 export {
-    index
+    index,
+    viewBigWord
 }
