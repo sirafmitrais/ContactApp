@@ -118,7 +118,7 @@ async function deleteContactById(id: string): Promise<{message?: string|null, er
             }
         })
         .catch((err: any) => {
-            errors.push(err)
+            errors.push(err.message)
         })
 
     if(errors.length>0){
