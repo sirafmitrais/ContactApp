@@ -19,6 +19,8 @@ import {
     userBaseSchema,
     userPasswordSchema
 } from '../contract'
+
+import { checkMongoErrorCode } from './helper';
 import { configApp } from '../config/env.config';
 
 type error = string[]
@@ -108,15 +110,6 @@ async function registerUser(dataReq: registerReq): Promise<{response?: registerR
             message: "success registration",
             token: token
         }
-    }
-}
-
-function checkMongoErrorCode(err: any): (string | any) {
-    if(err.code==11000){
-        return "You Were Registering using Username or Email or Identity Number or Account Number That Already Registered on System"
-    }
-    else{
-        return err
     }
 }
 
