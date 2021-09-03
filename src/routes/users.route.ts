@@ -35,4 +35,4 @@ router.route('/identity/:identity')
 router.route('/account/:account')
     .get([validateUserAccountIdentity,redisService.cache], getUserWithAccount)
 
-export {router};
+export {router as UserRouter};
