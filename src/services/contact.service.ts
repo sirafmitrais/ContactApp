@@ -64,7 +64,7 @@ async function createContact(dataCreate: contactBaseSchema): Promise<{response?:
             response = res
         })
         .catch((err: any) => {
-            errors.push(err)
+            errors.push(err.message)
         })
     if(errors.length>0){
         return{
