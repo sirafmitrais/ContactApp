@@ -26,6 +26,7 @@ async function getAll(): Promise<{response?:contactCompleteRes[], error?: error|
             error: errors
         }
     }
+    console.log('enter contact service');
     return {
         response
     }
@@ -41,6 +42,9 @@ async function getContactById(id: string): Promise<{response?:contactCompleteRes
         .catch((err: any) => {
             errors.push(err)
         })
+    if(response == null){
+        errors.push("data not found")
+    }
     if(errors.length>0){
         return {
             error: errors
@@ -54,6 +58,7 @@ async function getContactById(id: string): Promise<{response?:contactCompleteRes
 async function createContact(dataCreate: contactBaseSchema): Promise<{response?: contactCompleteRes|null, error?: error|null}>{
     let response: contactCompleteRes|null = null
     let errors: error = []
+    console.log("data create", dataCreate)
     await ContactModel.create(dataCreate)
         .then((res: any) => {
             response = res
@@ -105,8 +110,12 @@ async function deleteContactById(id: string): Promise<{message?: string|null, er
     let message: string | null = null
     let errors: error = []
     await ContactModel.findByIdAndDelete(id)
-        .then((_:any) => {
-            message = `success delete contact with id ${id}`
+        .then((data:any) => {
+            if(data == null){
+                errors.push("data you want to delete is not found")
+            }else{
+                message = `success delete contact with id ${id} ${data}`
+            }
         })
         .catch((err: any) => {
             errors.push(err)
