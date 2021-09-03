@@ -15,6 +15,8 @@ import {
     educationBaseSchema
 } from '../contract'
 
+import redisService from '../common/redis'
+
 const index = async (req: Request, res: Response, next: NextFunction) => {
     let response = await getAll()
     if(response.error){
@@ -25,6 +27,7 @@ const index = async (req: Request, res: Response, next: NextFunction) => {
             }
         )
     }
+    redisService.set(redisService.getKey(req.get('user')||"", req.originalUrl), JSON.stringify(response))
     res.status(200)
     res.json(response)
 }
@@ -95,6 +98,7 @@ const getContactId = async (req: Request, res: Response, next: NextFunction) => 
             error: response.error
         })
     }
+    redisService.set(redisService.getKey(req.get('user')||"", req.originalUrl), JSON.stringify(response))
     res.status(200)
     res.json(response)
 }
