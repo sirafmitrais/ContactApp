@@ -46,7 +46,7 @@ function set(redis_key:string, redis_value:string){
 
 
 function cache(req: Request, res: Response, next: NextFunction){
-    const redis_key = req.path;
+    const redis_key = getKey(req.get('user')||"", req.originalUrl);
     console.log("masuk cache : ", redis_key);
     redisClient.get(redis_key, (err, data) => {
         if(err) throw err;
@@ -55,6 +55,7 @@ function cache(req: Request, res: Response, next: NextFunction){
             const response = JSON.parse(data || '{}');
             res.status(200)
             res.json(response)
+            return;
         }
         else{
             next()
@@ -62,10 +63,23 @@ function cache(req: Request, res: Response, next: NextFunction){
     })
 }
 
+function getKey(keyRequest: string, path: string){
+    let dataUserItself = keyRequest;
+    let key = ""
+    if(dataUserItself !== ""){
+        key = path + dataUserItself
+    }else{
+        key = path
+    }
+    return key
+    
+}
+
 const redisService = {
     get,
     set,
-    cache
+    cache,
+    getKey
 }
 
 export default redisService
