@@ -13,10 +13,46 @@ const contactSchema = new Schema(
             type: String,
         },
         company: {
-            type: [companySchema],
+            type: [
+                {
+                   company_name: {
+                       type: String
+                   },
+                   title: {
+                       type: String
+                   },
+                   start_from: {
+                       type: Number
+                   } ,
+                   until: {
+                       type: Number
+                   },
+                   description: {
+                       type: String
+                   },
+                   status: {
+                       type: String
+                   }
+                }
+            ],
         },
         education: {
-            type: [educationSchema],
+            type: [
+                {
+                   institution_name: {
+                       type: String
+                   },
+                   major: {
+                       type: String
+                   },
+                   enrolled_year: {
+                       type: Number
+                   } ,
+                   graduation_year: {
+                       type: Number
+                   },
+                }
+            ]
         }, 
         phone_number: {
             type: String,

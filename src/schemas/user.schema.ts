@@ -49,10 +49,6 @@ const userSchema = new Schema(
     }
 );
 
-userSchema.methods.encryptPassword = function (password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync());
-}
-
 // userSchema.methods.verifyPassword = function (password) {
 //     return bcrypt.compareSync(password, this.password);
 // }
