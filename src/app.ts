@@ -1,8 +1,13 @@
 import express from "express";
 
-import {router as indexRouter} from "./routes/index.route";
-import {router as userRouter} from "./routes/users.route";
-import {router as authRouter} from "./routes/auth.route";
+import {
+    IndexRouter,
+    UserRouter,
+    AuthRouter,
+    ContactRouter
+} from "./routes";
+
+
 import loggerMiddleware from "./common/middleware/logger.middleware";
 // Create Express server
 const app = express();
@@ -14,9 +19,10 @@ app.use(express.urlencoded({
 app.set('view engine', 'pug');
 
 app.use(loggerMiddleware);
-app.use('/', indexRouter);
-app.use('/users', userRouter);
-app.use('/auth', authRouter);
+app.use('/', IndexRouter);
+app.use('/users', UserRouter);
+app.use('/auth', AuthRouter);
+app.use('/contact', ContactRouter);
 
 
 
