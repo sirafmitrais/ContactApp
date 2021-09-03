@@ -13,4 +13,4 @@ var router = Router();
 router.post('/register', [validateField], register);
 router.post('/login', [validateLogin], login );
 
-export {router};
+export {router as AuthRouter};

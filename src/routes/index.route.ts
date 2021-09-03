@@ -10,4 +10,4 @@ var router = Router();
 
 router.get('/',viewBigWord);
 
-export {router};
+export {router as IndexRouter};
