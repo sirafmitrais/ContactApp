@@ -8,7 +8,7 @@ import {
     loginReq,
     registerResponse,
     registerReq
-} from '../contract/auth.contract'
+} from '../contract'
 
 import {
     people,
@@ -18,8 +18,7 @@ import {
     userBaseRes,
     userBaseSchema,
     userPasswordSchema
-} from '../contract/user.contract'
-import { config } from 'dotenv';
+} from '../contract'
 import { configApp } from '../config/env.config';
 
 type error = string[]
