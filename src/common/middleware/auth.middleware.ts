@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, Router } from 'express';
 import * as jwt from 'jsonwebtoken'
 
 import { UserModel } from '../../schemas/user.schema'
+import { Logger } from './logger.middleware';
 
 
 const getToken = (req: Request) => {
@@ -30,6 +31,7 @@ const getUser = async (username: string) => {
 const auth = async (req: Request, res: Response, next: NextFunction) => {
     let token = getToken(req);
     if (!token) {
+        Logger.error('UnAuthorize Access')
         res.status(401);
         res.json({
             err:['please login']
@@ -41,7 +43,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
         payload = await decodeToken(token);
     } catch (err){
         if(err instanceof jwt.JsonWebTokenError){
-            
+            Logger.error('Token Invalid')  
             res.status(401);
             res.json({
                 err: ['please re-login']
@@ -51,6 +53,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     if (isExpire(payload.exp)){
+        Logger.error('Token Expire')
         res.status(401);
         res.json({
             err: ['please re-login']

@@ -8,7 +8,7 @@ import {
 } from "./routes";
 
 
-import loggerMiddleware from "./common/middleware/logger.middleware";
+import {loggerMiddleware} from "./common/middleware/logger.middleware";
 // Create Express server
 const app = express();
 app.use(express.json())

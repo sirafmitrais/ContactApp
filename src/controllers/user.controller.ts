@@ -14,11 +14,13 @@ import {
 } from '../contract/user.contract'
 
 import redisService from '../common/redis'
+import { Logger } from '../common/middleware/logger.middleware';
 
 
 const index = async (req: Request, res: Response, next: NextFunction) => {
     let response = await listIndex();
     if(response.error){
+        Logger.error(response.error);
         res.status(404);
         res.json(
             {
