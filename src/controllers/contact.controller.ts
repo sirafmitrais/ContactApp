@@ -8,6 +8,10 @@ import {
 } from '../services/contact.service'
 
 import {
+    createContactBook
+} from '../services/contactBook.service'
+
+import {
     companyBaseSchema,
     contactBaseSchema,
     contactBaseUpdate,
@@ -33,23 +37,46 @@ const index = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 const postContact = async (req: Request, res: Response, next: NextFunction) => {
-    let companies: companyBaseSchema[] = req.body.company
+    // console.log("request contain:", req)
+    
+    let user = JSON.parse(req.get('user')||'{}')
     let education: educationBaseSchema[] = req.body.education
+    let companies: companyBaseSchema[] = req.body.company
+    let tags: string[] = req.body.tags
+    if(typeof req.body.company=='string'){
+        companies = JSON.parse(req.body.company)
+    }
+    if(typeof req.body.education=='string'){
+        education = JSON.parse(req.body.education)
+    }
+    if(typeof req.body.tags == 'string'){
+        tags = JSON.parse(req.body.tags)
+    }
     let dataCreate: contactBaseSchema = {
         name: req.body.name,
         title: req.body.title,
         email: req.body.email,
+        address: req.body.address,
         phone_number: req.body.phone_number,
         company: companies,
         education: education,
-        tags: req.body.tags    
+        tags: tags   
     }
-    let response = await createContact(dataCreate);
+    let response = await createContact(dataCreate, user.id);
     if(response.error){
         res.status(400);
         res.json({
             error: response.error
         })
+    }
+    if(response.response){
+        let response2 = await createContactBook(user.id, response.response.id)
+        if(response2.error){
+            res.status(400)
+            res.json({
+                error: response.error
+            })
+        }
     }
     res.status(201);
     res.json(response)
@@ -74,6 +101,7 @@ const patchContact = async (req: Request, res: Response, next: NextFunction) => 
         name: req.body.name,
         title: req.body.title,
         email: req.body.email,
+        address: req.body.address,
         phone_number: req.body.phone_number,
         company: companies,
         education: education,

@@ -1,5 +1,8 @@
 import {Router} from 'express'
-import { authMiddleware } from '../common/middleware/auth.middleware';
+import { 
+    authMiddleware,
+    upload,
+ } from '../common/middleware/';
 
 import {
     index,
@@ -17,7 +20,12 @@ router.use(authMiddleware);
 
 router.route('/')
     .get(redisService.cache,index)
-    .post(postContact)
+    .post([
+        upload(
+            "public/upload/images",
+            "image/png" || "image/jpeg",
+        ).single("image")
+    ],postContact)
 
 router.route('/:id')
     .get(redisService.cache,getContactId)
