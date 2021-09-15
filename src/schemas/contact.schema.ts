@@ -53,7 +53,10 @@ const contactSchema = new Schema(
                    },
                 }
             ]
-        }, 
+        },
+        address:{
+            type: String,
+        },
         phone_number: {
             type: String,
             required: true,
