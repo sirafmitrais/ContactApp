@@ -8,7 +8,8 @@ interface contactBaseSchema {
     name: string,
     title?: string,
     company?: companyBaseSchema[],
-    education?: educationBaseSchema[], 
+    education?: educationBaseSchema[],
+    address?: string,
     phone_number: string,
     email: string,
     tags?: string[]
@@ -18,7 +19,8 @@ interface contactBaseUpdate {
     name?: string,
     title?: string,
     company?: companyBaseSchema[],
-    education?: educationBaseSchema[], 
+    education?: educationBaseSchema[],
+    address?: string,
     phone_number?: string,
     email?: string,
     tags?: string[]
