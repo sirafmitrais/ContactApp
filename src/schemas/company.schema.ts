@@ -7,19 +7,16 @@ const companySchema = new Schema(
             type: String,
             required: true,
         },
-        title: {
-            type: String
-        },
-        start_from: {
-            type: Number,
-        },
-        until: {
-            type: Number,
-        }, 
         description: {
             type: String
         },
+        field: {
+            type: String
+        },
         status: {
+            type: String
+        },
+        image_path: {
             type: String
         }
     },
