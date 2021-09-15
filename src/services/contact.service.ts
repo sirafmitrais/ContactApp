@@ -1,5 +1,5 @@
 import {
- ContactModel
+ ContactModel,
 }
 from '../schemas/'
 
@@ -55,7 +55,7 @@ async function getContactById(id: string): Promise<{response?:contactCompleteRes
     }
 }
 
-async function createContact(dataCreate: contactBaseSchema): Promise<{response?: contactCompleteRes|null, error?: error|null}>{
+async function createContact(dataCreate: contactBaseSchema, idCreator?: string | undefined): Promise<{response?: contactCompleteRes|null, error?: error|null}>{
     let response: contactCompleteRes|null = null
     let errors: error = []
     console.log("data create", dataCreate)
